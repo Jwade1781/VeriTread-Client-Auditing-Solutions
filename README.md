@@ -4,7 +4,7 @@
     running each from a C# program if approved. If not, recreate each using equivalent C# libraries, i.e. Sklearn -> ML.NET
     
 ## Updates
-  11/29/2019 - Initial README.MD created
+  [0] 11/29/2019 - Initial README.MD created
 
 ## Description
 This project is to create solutions for the Online Freight
@@ -23,7 +23,8 @@ Broker VeriTread.
 [2] Create an automatic USDoT Checker that will pull all
     currently registered DoT numbers from VeriTreads customer
     database. Send the DoT numbers to RMIS/SAFER and determine
-    if the numbers activity is still marked as active/inactive.
+    if the numbers activity is still marked as active/inactive &&
+    any found changes in insurance policies.
     Update the database if changed.
 
 Optional ** If Completed Before End of SP 2020 Semester
@@ -36,7 +37,11 @@ Task [1] Extended -
     deny registration and display a message.
     
 # How to Run Programs 
-        Install all python dependencies, create necessary directories
+  C#:
+  [1] TBD -- Will create a program that will run the python scripts sequentially after a number is inputted
+  
+  Python:
+        Install all python dependencies, create necessary directories/subdirectories
     [1 first run only] run Setup.py
     
         Create the Decision Tree and save it    
