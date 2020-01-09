@@ -30,9 +30,14 @@ def __main():
 #######################################################################
 def Parse_Command_Line():
     # Parses the Command line to get the dot_number
-    import sys
-    dot_number = sys.argv[1]
-    return dot_number
+    try:
+        import sys
+        dot_number = sys.argv[1]
+        return dot_number
+
+    except:
+        print('No DOT number included in command line argument.. Exiting')
+        exit(0)
 
 #######################################################################
 def Get_Acceptance(dot_number):
