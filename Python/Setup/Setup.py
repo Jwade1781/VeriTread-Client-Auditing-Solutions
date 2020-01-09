@@ -61,6 +61,12 @@ def Create_Directories():
         try:
             os.mkdir(path_subdirectory)
             print(path_subdirectory + ' was created')
+
+            if (needed_subdirectories[i] == 'temp'):
+                path_subdirectory = path_subdirectory + '\\' + 'Generated_Emails'
+                os.mkdir(path_subdirectory)
+                print(path_subdirectory + ' was created')
+
         except:
             print(path_subdirectory + ' was already created')
             continue
