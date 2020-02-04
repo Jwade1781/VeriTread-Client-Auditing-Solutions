@@ -76,7 +76,7 @@ else:
     for i in range(len(list2)):
         list2[i] = single_space(list2[i])
 
-    table = PrettyTable([' ', ''])
+    table = PrettyTable(['Categories', 'Information'])
     for x in range(0,7):
         table.add_row([list1[x], list2[x]])
 
