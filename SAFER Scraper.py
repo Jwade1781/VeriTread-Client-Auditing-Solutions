@@ -2,6 +2,20 @@ import urllib.request
 
 from bs4 import BeautifulSoup #The library used to parse in the table data
 
+def spaces(string):
+    out = ''
+    for i in range(len(string)):
+        if string[i] != ' ' or string[i + 1] != ' ':
+            if string[i].isalpha or string[i] == ',':
+                if string[i] != chr(160) and string[i] != chr(13) and string[i] != chr(10):
+                    out += string[i]
+    return out
+
+def clean(string):
+    out = spaces(spaces(string))
+    return out
+
+
 #The Dot number that will be input from user
 DotNum = input("Enter your USDOT Number: ")
 
@@ -40,7 +54,7 @@ else:
     print("Entity Type: ",entityType)
     print("Operating Status: ",status)
     print("Legal Name: ",legalName)
-    print("Pyhsical Address: ", pyhsicalAddress)
+    print("Pyhsical Address: ", clean(pyhsicalAddress))
     print("Phone: ",phone)
     print("USDOT NUMBER: ", usdotNum)
     print("Drivers: ", drivers)
