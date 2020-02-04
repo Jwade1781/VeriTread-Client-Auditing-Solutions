@@ -7,8 +7,8 @@ from prettytable import PLAIN_COLUMNS
 from prettytable import DEFAULT
 
 def n_a(list):
-    for i in range(len(list)):
-        if list[i] == chr(160):
+    for i in range(len(list)):          #Checks for strings containg only random ascii chars and converts them to the string "N/A"
+        if list[i] == chr(160) or list[i] == chr(10) or list[i] == chr(13):
             list[i] = "N/A"
         list[i] = single_space(list[i])
     return list
