@@ -2,6 +2,16 @@ import urllib.request
 
 from bs4 import BeautifulSoup           #The library used to parse in the table data
 from prettytable import PrettyTable     #The library used to make the table
+from prettytable import MSWORD_FRIENDLY
+from prettytable import PLAIN_COLUMNS
+from prettytable import DEFAULT
+
+def n_a(list):
+    for i in range(len(list)):
+        if list[i] == chr(160):
+            list[i] = "N/A"
+        list[i] = single_space(list[i])
+    return list
 
 def single_space(string):
     if string[0] == ' ':                #If the first char is a space
@@ -26,15 +36,14 @@ def clean(string):
 
 
 #The Dot number that will be input from user
-DotNum = input("Enter your USDOT Number: ")
+#DotNum = input("Enter your USDOT Number: ")
+DotNum = '114448'
 
 #The url website that we're parsing
 url = 'https://safer.fmcsa.dot.gov/query.asp?searchtype=ANY&query_type=queryCarrierSnapshot&query_param=USDOT&query_string=' + DotNum
 
 page = urllib.request.urlopen(url)
 soup = BeautifulSoup(page,"html.parser")
-
-
 
 
 #Checking if record exists
@@ -59,22 +68,11 @@ else:
     entityType = entityType.strip()             #Gets rid of whitespace
     physicalAddress = physicalAddress.strip()   #Gets rid of whitespace
 
-    # Prints out table data in console
-    '''''
-    print("Entity Type: \t\t",entityType)
-    print("Operating Status: \t", status)
-    print("Legal Name: \t\t",legalName)
-    print("Physical Address: \t", clean(physicalAddress))
-    print("Phone: \t\t\t\t",phone)
-    print("USDOT NUMBER: \t\t", usdotNum)
-    print("Drivers: \t\t\t", drivers)
-    '''''
 
     list1 = ['Entity Type', 'Operating Status', 'Legal Name', 'Physical Address', 'Phone', 'USDOT Number', 'Drivers']
     list2 = [entityType, status, legalName, clean(physicalAddress), phone, usdotNum, drivers]
 
-    for i in range(len(list2)):
-        list2[i] = single_space(list2[i])
+    list2 = n_a(list2)
 
     table = PrettyTable(['Categories', 'Information'])
     for x in range(0,7):
