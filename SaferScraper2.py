@@ -80,5 +80,7 @@ else:
     for x in range(0,7):
         table.add_row([list1[x], list2[x]])
 
+    table.set_style(DEFAULT)            #Style can be MSWORD_FRIENDLY, DEFAULT, or PLAIN_COLUMN
+    table.header = False
     table.align = 'l'
     print(table)
