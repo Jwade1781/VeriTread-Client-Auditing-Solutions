@@ -2,6 +2,7 @@
 ## Senior Design FPU FA 2019 - SP 2020
  ~~-- Currently the ML and Email modules are created in python with the plan of 
     running each from a C# program if approved. If not, recreate each using equivalent C# libraries, i.e. Sklearn -> ML.NET~~ 
+    
     (No longer in current scope [Part of Task 1 Extended])
     
 ## Updates
