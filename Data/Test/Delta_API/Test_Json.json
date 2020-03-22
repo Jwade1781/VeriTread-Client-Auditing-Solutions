@@ -1,0 +1,17 @@
+{
+    "RMISDeltaAPI": {
+        "Header": {
+            "TimeStamp": "2020-03-19T01:19:53.6641859Z",
+            "API": "DeltaAPI",
+            "APIMode": "FETCH",
+            "APIVersion": "1",
+            "Result": "SUCCESS"
+        },
+        "FETCH": {
+		"InsdID": [
+			"100969",
+			"2586367"
+		]
+	}
+    }
+}
