@@ -53,10 +53,13 @@ Task [1] Extended -
 
 # How to Run Programs 
 Pulling individual Client Information: (Onboarding API)
+
     python ./Onboarding_API_Request.py 'userID' 'password' 'dot number'
     
 Pulling list of all companies that have had changes: (Delta API)
+
     python ./Delta_Api_Request.py 'userID' 'password'
   
 Setup the directories && Install Dependencies
+
     python ./Setup.py 'Install Required Modules (True/False)'
