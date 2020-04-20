@@ -9,6 +9,11 @@
 #   Companies info will be saved from the onboarding api program at 
 #   '../Data/temp/xml/'
 #
+#
+#   Timeout functionality built in to be checked every xx seconds
+#   Time can be set by days, hours, etc. at Get_Timeout_Seconds()
+#
+#
 # pip installs:
 #   --
 #
@@ -24,17 +29,24 @@ def main():
     
     # Get the required API URL
     apiRequestURL = Get_Request_URL()
+
+    # Get the time to pass before every new post request from RMIS    
+    totalTimeoutSeconds = Get_Timeout_Seconds()
     
-    # Send a Post Request to the API URL and fetch the JSON response
-    #responseJsonText = Retrieve_API_Info(clientID, password, apiRequestURL)
-    responseJsonText = Test_Json_Parse()
+    import time
+    while True:
+        # Send a Post Request to the API URL and fetch the JSON response
+        responseJsonText = Retrieve_API_Info(clientID, password, apiRequestURL)
+        #responseJsonText = Test_Json_Parse()
     
-    # Parse the JSON Response of the list of companies that were updated
-    updateCompanyList = Parse_Json(responseJsonText)
+        # Parse the JSON Response of the list of companies that were updated
+        updateCompanyList = Parse_Json(responseJsonText)
     
-    # If there were companies in the retrieved list, update them using the onboarding API
-    if updateCompanyList is not None:
-        Update_Company_Info(clientID, password, updateCompanyList)
+        # If there were companies in the retrieved list, update them using the onboarding API
+        if updateCompanyList is not None:
+            Update_Company_Info(clientID, password, updateCompanyList)
+
+        time.sleep(totalTimeoutSeconds)        
 
 ###############################################################################
 # returns the user ID followed by the password .. These are inputted into the
@@ -66,13 +78,22 @@ def Retrieve_API_Info(clientID, password, apiRequestURL):
 # Data since last called. This may be used as a substitute for testing purposes
 def Test_Json_Parse():
     from json import dumps, load
-    PATH = "../Data/Test/Delta_API/"
+    PATH = "../Data/Test/"
     FILENAME = "Test_Json.json"
     with open(PATH + FILENAME) as f:
         data = load(f)
         
     return dumps(data)
 
+###############################################################################
+def Get_Timeout_Seconds():
+    daysTimeOut = 0
+    hoursTimeOut = 3
+    minutesTimeOut = 0
+    secondsTimeout = 0
+    
+    return (daysTimeOut * 24 * 60 * 60) + (hoursTimeOut * 60 * 60) +  (minutesTimeOut * 60) + secondsTimeout
+    
 ###############################################################################
 # Parse the given Json response for the list of company ids that have been updated
 def Parse_Json(responseJsonText):
