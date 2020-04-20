@@ -5,7 +5,7 @@
 #   followed by the userID and password into the command line. From this, the
 #   dotNumber, userID, and password will be concat with the RMIS API url and send
 #   and http request and the response will be in the form of an XML document.
-#   The document will be saved into a temp file to be parsed using BeautifulSoup
+#   The document will be saved into a temp file to be parsed using xml el tree
 #   and dumped into the appropriate File(s).   
 #
 #
@@ -18,12 +18,12 @@
 #   pip install prettytable
 #
 # Run:
-#   python ./API_Request.py 'userID' 'password' 'dot number'
+#   python ./Onboarding_API_Request.py 'userID' 'password' 'dot number'
 #
 # Ex: 
-#   python ./SAFER_Scraper.py userID425 password123 123456
+#   python ./Onboarding_API_Request.py userID425 password123 123456
 ###############################################################################
-def main():
+def main():    
     # Get the API Authentication Information
     clientID, password = Get_API_Auth_Info()
     
@@ -35,13 +35,16 @@ def main():
     
     # Send a Get request to the API URL and retrieve the companies info in XML
     requestXmlText = Retrieve_API_Info(apiRequestURL)
-    print(apiRequestURL)
     
-    # Dump the retrieved company information to XML
-    Dump_To_File(dotNumber, "xml", requestXmlText)
+    PATH = "../Data/temp/xml/"
+    FILENAME = PATH + str(dotNumber) + "_company_info.xml"
+    
+    # Dump the retrieved company information to XML file
+    Dump_To_File(dotNumber, requestXmlText, FILENAME)
     
     # Go through each individual child of the XML and print the tag with the value
-    Traverse_XML(dotNumber, True)
+    wantPrintTable=True # Used for testing, prints the table out using pretty table library
+    Traverse_XML(dotNumber, wantPrintTable, FILENAME)
 
 ###############################################################################
 # returns the user ID followed by the password .. These are inputted into the
@@ -67,22 +70,19 @@ def Get_Request_URL(clientID, password, dotNumber):
 ###############################################################################
 # requests the inputted URL to the RMIS API and returns the XML response
 def Retrieve_API_Info(apiRequestURL):
-    import requests
-    return requests.get(apiRequestURL).text
+    from requests import get
+    return get(apiRequestURL).text
 
 ###############################################################################
-def Dump_To_File(dotNumber, fileType, text):
-    #with open("../Data/temp/company_info.xml", "w") as file:
-    if fileType.lower() == "xml":
-        with open("../Data/temp/xml/" + str(dotNumber) + "_company_info." + fileType, "w") as file:
-            file.write(text)
-    
-    file.close()
+def Dump_To_File(dotNumber, xmlText, FILENAME):
+    with open(FILENAME, "w") as file: file.write(xmlText)
     
 ###############################################################################
-def Traverse_XML(dotNumber, wantPrintTable):
+# Used to find each sub element in the parent elements .. Currently only used for printing
+# purposes. Can be expanded for parsing out each of the required elements
+def Traverse_XML(dotNumber, wantPrintTable, FILENAME):
     import xml.etree.ElementTree as ET
-    tree = ET.parse("../Data/temp/xml/" + str(dotNumber) + "_company_info.xml")
+    tree = ET.parse(FILENAME)
     root = tree.getroot()
     
     # Go through each of the tags beneath root
@@ -93,8 +93,7 @@ def Traverse_XML(dotNumber, wantPrintTable):
         headers.append(parent.tag)
         parsedChild = []
         tags = []
-
-        # Want to update this later so it looks better, less repeating code        
+   
         for levelOneChild in parent:
             for levelTwoChild in levelOneChild:
                 for levelThreeChild in levelTwoChild:                                                
@@ -118,7 +117,9 @@ def Traverse_XML(dotNumber, wantPrintTable):
 
         parsedParent.append(parsedChild)
         if wantPrintTable: Print_Table(parent.tag, tags, parsedChild)
-
+        
+        # SQL statements can go here for inserting into table(s)
+        # Could be similar to how Print_Table function handles printing for inserting
 ###############################################################################
 def Print_Table(tableHeader, tags, data):
     from prettytable import PrettyTable, DEFAULT
