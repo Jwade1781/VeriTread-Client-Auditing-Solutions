@@ -7,6 +7,7 @@
     
 ## Updates
   11/29/2019 - Initial README.MD created
+  
   2/28/2020 - Update to reflect changes in project; Access to RMIS APIs / No database access
 
 ## Description
@@ -38,19 +39,24 @@ Task [1] Extended -
     from RMIS API is a suitable customer for VeriTread.
     If the system deems that the customer is not suitable
     deny registration and display a message.
+
+[3] Create a new user GUI that will display the information that
+    was found attached to the DOT Number
     
 # Dependencies (Tested versions in brackets)
-    [1] BeautifulSoup (Used for easier XML Parsing) [4.8.0]
-    [2] PrettyTable (Used for print formating) [0.7.2]
-    [3] lxml (XML Parser) [4.4.1]
+    [1] PrettyTable (Used for print formating) [0.7.2]
+    [2] lxml (XML Parser) [4.4.1]
 
 # Pip installs
-    [1] pip install bs4
-    [2] pip install prettytable
-    [3] pip install lxml
+    [1] pip install prettytable
+    [2] pip install lxml
 
 # How to Run Programs 
-Pulling individual Client Information:
-    ./python API_Request dotNumber rmisID password
+Pulling individual Client Information: (Onboarding API)
+    python ./Onboarding_API_Request.py 'userID' 'password' 'dot number'
+    
+Pulling list of all companies that have had changes: (Delta API)
+    python ./Delta_Api_Request.py 'userID' 'password'
   
-
+Setup the directories && Install Dependencies
+    python ./Setup.py 'Install Required Modules (True/False)'
